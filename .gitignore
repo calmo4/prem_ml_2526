@@ -1,0 +1,16 @@
+# Python environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (ignore raw and large files)
+data/*
+!data/.gitkeep
+
+# macOS system junk
+.DS_Store
