@@ -21,6 +21,19 @@ Seasons used:
 - Automatically downloads latest season data
 - Keeps dataset current on every run
 
+## 📊 Model Performance
+
+Below shows prediction error (MAE) across matchweeks comparing:
+
+- Linear Regression (baseline)
+- Random Forest
+- Rolling Form model
+
+Error decreases as season progresses — demonstrating that more match data improves forecast stability.
+
+![Model Comparison](assets/model_comparison.png)
+
+
 Run with:
 ```bash
 source .venv/bin/activate
