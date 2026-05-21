@@ -1,18 +1,8 @@
-# Python environment
 .venv/
-# VS Code settings
 .vscode/
-
-# Python cache
 __pycache__/
-*.py[cod]
-
-# Jupyter
+*.pyc
 .ipynb_checkpoints/
-
-# Data (ignore raw and large files)
-data/*
-!data/.gitkeep
-
-# macOS system junk
+data/raw/*
+data/processed/*
 .DS_Store
