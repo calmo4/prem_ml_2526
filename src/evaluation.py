@@ -80,3 +80,59 @@ def evaluate_model_by_cutoff(
         })
 
     return pd.DataFrame(results)
+
+
+
+
+
+def predict_final_table(
+    team_matches,
+    season_table,
+    cutoff,
+    test_season,
+    model_type="linear"
+):
+    """
+    Predict final league table using only matches up to a cutoff.
+    """
+
+    features = ["PointsN", "GFN", "GAN"]
+
+    data = build_cutoff_dataset(
+        team_matches=team_matches,
+        season_table=season_table,
+        cutoff=cutoff
+    )
+
+    train = data[data["Season"] != test_season]
+    test = data[data["Season"] == test_season].copy()
+
+    if model_type == "linear":
+        output = train_linear_model(
+            train_df=train,
+            test_df=test,
+            features=features
+        )
+
+    elif model_type == "random_forest":
+        output = train_random_forest(
+            train_df=train,
+            test_df=test,
+            features=features
+        )
+
+    else:
+        raise ValueError("model_type must be 'linear' or 'random_forest'")
+
+    test["PredictedFinalPoints"] = output["predictions"]
+    test["PredictionError"] = test["PredictedFinalPoints"] - test["Points"]
+
+    table = (
+        test
+        .sort_values("PredictedFinalPoints", ascending=False)
+        .reset_index(drop=True)
+    )
+
+    table.insert(0, "PredictedRank", table.index + 1)
+
+    return table
